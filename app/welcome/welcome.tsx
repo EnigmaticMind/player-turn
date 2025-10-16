@@ -1,23 +1,54 @@
+import { useEffect, useRef, useState } from "react";
 import { TouchGlow } from "../components/TouchGlow";
 
+function isMobileDevice() {
+  const mobileRegex =
+    /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
+  return mobileRegex.test(navigator.userAgent);
+}
+
 export function Welcome() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [start, setStart] = useState(false);
+
+  const startEvent = () => {
+    setStart(true);
+  };
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.addEventListener("click", startEvent);
+
+    return () => {
+      container.removeEventListener("click", startEvent);
+    };
+  }, []);
   return (
-    <TouchGlow className="min-h-screen w-full">
-      <main className="flex items-center justify-center pt-16 pb-4 min-h-screen">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-4">
-            Welcome to Player Turn
-          </h1>
-          <p className="text-lg text-gray-200">
-            Touch with multiple fingers or move your mouse around to see the
-            magic! ✨<br />
-            <span className="text-sm text-gray-300">
-              Each finger gets a random color. After 5 seconds with multiple
-              touches, only one random finger stays glowing!
-            </span>
-          </p>
-        </div>
-      </main>
-    </TouchGlow>
+    <div ref={containerRef}>
+      {start ? (
+        <TouchGlow className="min-h-screen w-full"></TouchGlow>
+      ) : (
+        <main className="flex items-center justify-center pt-16 pb-4 min-h-screen">
+          {isMobileDevice() ? (
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-white mb-4">
+                Tap the screen to begin
+              </h1>
+              <p className="text-md text-gray-200">
+                After a few moments, one finger will be chosen at random.
+              </p>
+            </div>
+          ) : (
+            <div className="text-center">
+              <h1 className="text-2xl font-bold text-white mb-4">
+                Please open this on a mobile device.
+              </h1>
+            </div>
+          )}
+        </main>
+      )}
+    </div>
   );
 }
