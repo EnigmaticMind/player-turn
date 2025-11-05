@@ -23,8 +23,9 @@ export const links: Route.LinksFunction = () => [
   },
   { rel: "manifest", href: "/manifest.json" },
   { rel: "icon", href: "/icon.svg", type: "image/svg+xml" },
-  { rel: "apple-touch-icon", href: "/icon.svg" },
-  { rel: "apple-touch-icon", href: "/favicon.ico", sizes: "180x180" },
+  { rel: "icon", href: "/icon-192.png", type: "image/png", sizes: "192x192" },
+  { rel: "icon", href: "/icon-512.png", type: "image/png", sizes: "512x512" },
+  { rel: "apple-touch-icon", href: "/icon-192.png" },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -32,7 +33,10 @@ export function Layout({ children }: { children: React.ReactNode }) {
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+        />
         <meta name="theme-color" content="#000000" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta

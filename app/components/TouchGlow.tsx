@@ -248,7 +248,7 @@ export function TouchGlow({ className = "", children }: TouchGlowProps) {
           >
             {/* Ripple wave 1 */}
             <div
-              className="absolute w-40 h-40 rounded-full border-2 ripple-ping"
+              className="absolute w-48 h-48 rounded-full border-2 ripple-ping"
               style={{
                 animationDuration: "2s",
                 left: "50%",
@@ -273,7 +273,7 @@ export function TouchGlow({ className = "", children }: TouchGlowProps) {
 
             {/* Ripple wave 2 */}
             <div
-              className="absolute w-32 h-32 rounded-full border-2 ripple-ping"
+              className="absolute w-40 h-40 rounded-full border-2 ripple-ping"
               style={{
                 animationDuration: "1.5s",
                 animationDelay: "0.3s",
@@ -299,27 +299,7 @@ export function TouchGlow({ className = "", children }: TouchGlowProps) {
 
             {/* Main glow */}
             <div
-              className={`absolute w-24 h-24 rounded-full bg-gradient-to-r ${point.color} opacity-80 blur-md shadow-2xl`}
-              style={{
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            />
-
-            {/* White border */}
-            {/* <div
-              className="absolute w-20 h-20 rounded-full border-2 border-white shadow-lg"
-              style={{
-                left: "50%",
-                top: "50%",
-                transform: "translate(-50%, -50%)",
-              }}
-            /> */}
-
-            {/* Inner core */}
-            <div
-              className={`absolute w-10 h-10 rounded-full bg-gradient-to-r ${point.color} opacity-100`}
+              className={`absolute w-28 h-28 rounded-full bg-gradient-to-r ${point.color} opacity-80 blur-md shadow-2xl`}
               style={{
                 left: "50%",
                 top: "50%",

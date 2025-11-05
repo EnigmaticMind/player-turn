@@ -146,7 +146,7 @@ export function Welcome() {
           {!isInstalled && (
             <button
               onClick={handleInstallClick}
-              className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold text-lg rounded-lg hover:bg-white hover:text-black transition-colors shadow-lg active:scale-95"
+              className="px-8 py-4 bg-transparent border-2 border-white text-white font-semibold text-lg rounded-lg transition-colors shadow-lg active:scale-95"
             >
               Add to Home Screen
             </button>
