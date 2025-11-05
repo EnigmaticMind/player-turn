@@ -71,3 +71,24 @@ body {
 .touch-glow-core {
   animation: glow-pulse 0.5s ease-in-out infinite;
 }
+
+/* Ripple animation that scales from center */
+@keyframes ripple-ping {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 1;
+  }
+  75%, 100% {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+.ripple-ping {
+  animation-name: ripple-ping;
+  animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  transform-origin: center;
+  will-change: transform, opacity;
+}

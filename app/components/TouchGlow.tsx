@@ -18,7 +18,7 @@ interface TouchPoint {
 
 const TIME_TO_SHOW_CHOSEN = 4000;
 
-const TIME_TO_PICK = 3000;
+const TIME_TO_PICK = 2000;
 
 const TOUCH_COLORS = [
   "from-red-500 to-red-600",
@@ -109,6 +109,11 @@ export function TouchGlow({ className = "", children }: TouchGlowProps) {
 
   const handleTouchStart = (e: TouchEvent) => {
     if (e.changedTouches.length > 0) {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+
       setTouchPoints((prevMap) => {
         let map = new Map(prevMap);
         for (let i = 0; i < e.changedTouches.length; i++) {
@@ -116,8 +121,8 @@ export function TouchGlow({ className = "", children }: TouchGlowProps) {
 
           map.set(touch.identifier, {
             id: touch.identifier,
-            x: touch.clientX,
-            y: touch.clientY,
+            x: touch.clientX - rect.left,
+            y: touch.clientY - rect.top,
             color: getUniqueColor(map),
           });
         }
@@ -134,6 +139,11 @@ export function TouchGlow({ className = "", children }: TouchGlowProps) {
 
   const handleTouchMove = (e: TouchEvent) => {
     if (e.changedTouches.length > 0) {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+
       setTouchPoints((prevMap) => {
         const map = new Map(prevMap);
         for (let i = 0; i < e.changedTouches.length; i++) {
@@ -141,8 +151,8 @@ export function TouchGlow({ className = "", children }: TouchGlowProps) {
           const prevTouch = map.get(touch.identifier);
 
           if (prevTouch) {
-            prevTouch.x = touch.clientX;
-            prevTouch.y = touch.clientY;
+            prevTouch.x = touch.clientX - rect.left;
+            prevTouch.y = touch.clientY - rect.top;
             map.set(touch.identifier, prevTouch);
           }
         }
@@ -229,21 +239,92 @@ export function TouchGlow({ className = "", children }: TouchGlowProps) {
         return (
           <div
             key={key}
-            className={`absolute pointer-events-none transition-opacity duration-200`}
+            className="absolute pointer-events-none"
             style={{
-              left: point.x - 90,
-              top: point.y - 90,
-              transform: "translateZ(0)", // Hardware acceleration
+              left: point.x,
+              top: point.y,
+              transform: "translate(-50%, -50%) translateZ(0)",
             }}
           >
-            {/* Solid white line circle */}
+            {/* Ripple wave 1 */}
             <div
-              className="absolute w-38 h-38 rounded-full border-4 border-white
-          "
+              className="absolute w-40 h-40 rounded-full border-2 ripple-ping"
+              style={{
+                animationDuration: "2s",
+                left: "50%",
+                top: "50%",
+                borderColor: point.color.includes("red")
+                  ? "rgba(239, 68, 68, 0.3)"
+                  : point.color.includes("amber")
+                    ? "rgba(245, 158, 11, 0.3)"
+                    : point.color.includes("yellow")
+                      ? "rgba(234, 179, 8, 0.3)"
+                      : point.color.includes("green")
+                        ? "rgba(34, 197, 94, 0.3)"
+                        : point.color.includes("cyan")
+                          ? "rgba(6, 182, 212, 0.3)"
+                          : point.color.includes("blue")
+                            ? "rgba(59, 130, 246, 0.3)"
+                            : point.color.includes("indigo")
+                              ? "rgba(99, 102, 241, 0.3)"
+                              : "rgba(236, 72, 153, 0.3)",
+              }}
             />
-            {/* Outer solid glow ring */}
+
+            {/* Ripple wave 2 */}
             <div
-              className={`absolute w-38 h-38 rounded-full bg-gradient-to-r ${point.color} opacity-80 blur-sm touch-glow-outer`}
+              className="absolute w-32 h-32 rounded-full border-2 ripple-ping"
+              style={{
+                animationDuration: "1.5s",
+                animationDelay: "0.3s",
+                left: "50%",
+                top: "50%",
+                borderColor: point.color.includes("red")
+                  ? "rgba(239, 68, 68, 0.5)"
+                  : point.color.includes("amber")
+                    ? "rgba(245, 158, 11, 0.5)"
+                    : point.color.includes("yellow")
+                      ? "rgba(234, 179, 8, 0.5)"
+                      : point.color.includes("green")
+                        ? "rgba(34, 197, 94, 0.5)"
+                        : point.color.includes("cyan")
+                          ? "rgba(6, 182, 212, 0.5)"
+                          : point.color.includes("blue")
+                            ? "rgba(59, 130, 246, 0.5)"
+                            : point.color.includes("indigo")
+                              ? "rgba(99, 102, 241, 0.5)"
+                              : "rgba(236, 72, 153, 0.5)",
+              }}
+            />
+
+            {/* Main glow */}
+            <div
+              className={`absolute w-24 h-24 rounded-full bg-gradient-to-r ${point.color} opacity-80 blur-md shadow-2xl`}
+              style={{
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+
+            {/* White border */}
+            {/* <div
+              className="absolute w-20 h-20 rounded-full border-2 border-white shadow-lg"
+              style={{
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            /> */}
+
+            {/* Inner core */}
+            <div
+              className={`absolute w-10 h-10 rounded-full bg-gradient-to-r ${point.color} opacity-100`}
+              style={{
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
             />
           </div>
         );
