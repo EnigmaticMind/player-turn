@@ -3,6 +3,7 @@
   "short_name": "Player Turn",
   "description": "A fun interactive game for selecting players",
   "start_url": "/",
+  "scope": "/player-turn/",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
