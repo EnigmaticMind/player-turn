@@ -1,0 +1,24 @@
+{
+  "name": "Player Turn",
+  "short_name": "Player Turn",
+  "description": "A fun interactive game for selecting players",
+  "start_url": "/?fullscreen=true",
+  "display": "fullscreen",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}
+
