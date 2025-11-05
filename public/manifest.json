@@ -1,6 +1,6 @@
 {
   "name": "Player Turn",
-  "short_name": "Turn",
+  "short_name": "Turn Picker",
   "description": "A fun interactive game for selecting players",
   "start_url": "./",
   "scope": "./",
