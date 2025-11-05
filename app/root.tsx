@@ -10,6 +10,9 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 
+// Get base path from Vite's BASE_URL (automatically set based on vite.config.ts)
+const basePath = import.meta.env.BASE_URL || "/";
+
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -21,11 +24,25 @@ export const links: Route.LinksFunction = () => [
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
   },
-  { rel: "manifest", href: "/manifest.json" },
-  { rel: "icon", href: "/icon.svg", type: "image/svg+xml" },
-  { rel: "icon", href: "/icon-192.png", type: "image/png", sizes: "192x192" },
-  { rel: "icon", href: "/icon-512.png", type: "image/png", sizes: "512x512" },
-  { rel: "apple-touch-icon", href: "/icon-192.png" },
+  { rel: "manifest", href: `${basePath}manifest.json` },
+  { rel: "icon", href: `${basePath}icon.svg`, type: "image/svg+xml" },
+  {
+    rel: "icon",
+    href: `${basePath}icon-192.png`,
+    type: "image/png",
+    sizes: "192x192",
+  },
+  {
+    rel: "icon",
+    href: `${basePath}icon-512.png`,
+    type: "image/png",
+    sizes: "512x512",
+  },
+  {
+    rel: "apple-touch-icon",
+    href: `${basePath}icon-512.png`,
+    sizes: "512x512",
+  },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
